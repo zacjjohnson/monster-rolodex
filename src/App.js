@@ -1,15 +1,19 @@
 // import e from 'express';
 import { Component } from 'react';
+import CardList from './components/card-list/card-list-component';
 
 // import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
-    constructor() {
-      super();
 
-      this.state = {
-        monsters: [],
+class App extends Component {
+  constructor() {
+    super();
+    
+    this.state = {
+      monsters: [],
+      searchField: ''
+      
       }
       console.log('Constructor');
     };
@@ -27,31 +31,36 @@ class App extends Component {
       }
       )
     );
-        
-      
+  }
+
+  onSearchChange = (event) => {
+    const searchField = event.target.value.toLowerCase();
+    this.setState(() => {
+      return { searchField }
+    });
   }
 
 
   render() {
     console.log('Render');
+
+    const { monsters, searchField } = this.state;
+    const { onSearchChange } = this;
+    const filteredMonsters = monsters.filter((monster) => {
+      return monster.name.toLowerCase().includes(searchField);
+    })
+
     return (
       <div className="App">
-        <input className='search-box' type='search' placeholder='search monsters' onChange={(event) => {
-          console.log(event.target.value)
-          const searchString = event.target.value.toLowerCase();
-          const filteredMonsters = this.state.monsters.filter((monster) => {
-            return monster.name.toLowerCase().includes(searchString);
-          })
-
-          this.setState(() => {
-            return { monsters: filteredMonsters }
-          })
-          }} />
-        {
-          this.state.monsters.map((monster) => {
-            return <div key={monster.id}><h1>{monster.name} </h1></div>
-          })
-        }
+        <input className='search-box' type='search' placeholder='search monsters' 
+        onChange={onSearchChange} 
+      />
+      <CardList />
+        <div>{
+        filteredMonsters.map((monster) => {
+          return <div key={monster.id}><h1>{monster.name} </h1></div>
+        })
+      }</div>
       </div>
     );
 
