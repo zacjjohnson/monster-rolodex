@@ -11,10 +11,10 @@ const App = () => {
   const [filteredMonsters, setFilteredMonsters] = useState(monsters);
   
 
-  console.log('render')
+  // console.log('render')
 
   useEffect(() => {
-    console.log('Effect fired')
+    // console.log('Effect fired')
     fetch('https://jsonplaceholder.typicode.com/users')
         .then((response) => response.json())
         .then((users) => setMonsters(users)
@@ -29,7 +29,7 @@ const App = () => {
 
     setFilteredMonsters(newFilteredMonsters);
 
-    console.log('effect is firing')
+    // console.log('effect is firing')
   }, [monsters, searchField]);
 
 
@@ -45,7 +45,7 @@ const App = () => {
   //   return monster.name.toLowerCase().includes(searchField);
   // });
 
-        console.log(filteredMonsters)
+        // console.log(filteredMonsters)
 
   return (
     <div className="App">
